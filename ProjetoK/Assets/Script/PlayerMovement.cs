@@ -10,7 +10,13 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -10f;
 
+    public Transform groundCheck;
+    public float groundDistance;
+    public LayerMask groundMask;
+
+
     Vector3 velocity;
+    bool isGrounded;
 
     void Start()
     {
@@ -20,6 +26,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(isGrounded && velocity.y < 0) {
+            velocity.y = -2f;
+        }
+
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
